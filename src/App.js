@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const tasks = [
   {
@@ -23,12 +23,19 @@ const tasks = [
   },
 ];
 
-const App = () => {
+const App = (store) => {
+  const [value, setValue] = useState("");
+
+  const addClick = () => {
+    console.log(value);
+  };
+
   return (
     <div>
       <div>
         <h4>ToDo List</h4>
-        <textarea></textarea> <button>Add todo</button>
+        <textarea onChange={(e) => setValue(e.target.value)}>{value}</textarea>
+        <button onClick={addClick}>Add todo</button>
       </div>
 
       <div>

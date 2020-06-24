@@ -1,18 +1,46 @@
-import { createStore, combineReducers } from "redux";
+import { configureStore, createReducer, createAction } from "@reduxjs/toolkit";
+import { nanoid } from "@reduxjs/toolkit";
 
-const reducers = combineReducers({});
-const store = createStore(reducers);
-
-export default store;
-
-/*const store = {
-  state: {
-    todo: [],
+const state = [
+  {
+    _id: 1,
+    text: "create react app",
+    isDone: true,
   },
-  getState() {
-    return this.state;
+  {
+    _id: 2,
+    text: "add git",
+    isDone: true,
   },
+  {
+    _id: 3,
+    text: "add redux",
+    isDone: false,
+  },
+  {
+    _id: 4,
+    text: "working hard",
+    isDone: false,
+  },
+];
+
+const ADD_TODO = createAction("ADD_TODO");
+
+const addTodo = (id, text) => {
+  return {
+    type: ADD_TODO,
+    payload: { id: nanoid(), text, isDone: false },
+  };
 };
 
+const rootReducer = createReducer(state, {
+  ADD_TODO: (state, action) => {
+    state.push(action.payload);
+  },
+});
+
+const store = configureStore({
+  reducer: rootReducer,
+});
+
 export default store;
-*/
