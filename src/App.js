@@ -1,41 +1,26 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo, delTodo } from "./redux/store";
 
-const tasks = [
-  {
-    _id: 1,
-    text: "create react app",
-    isDone: true,
-  },
-  {
-    _id: 2,
-    text: "add git",
-    isDone: true,
-  },
-  {
-    _id: 3,
-    text: "add redux",
-    isDone: false,
-  },
-  {
-    _id: 4,
-    text: "working hard",
-    isDone: false,
-  },
-];
-
-const App = (store) => {
+export const App = () => {
+  const tasks = useSelector((state) => state);
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
 
-  const addClick = () => {
-    console.log(value);
+  const addTodos = (e) => {
+    e.preventDefault();
+    dispatch(addTodo(value));
+    setValue("");
   };
 
   return (
     <div>
       <div>
-        <h4>ToDo List</h4>
-        <textarea onChange={(e) => setValue(e.target.value)}>{value}</textarea>
-        <button onClick={addClick}>Add todo</button>
+        <form onSubmit={addTodos}>
+          <h4>ToDo List</h4>
+          <input value={value} onChange={(e) => setValue(e.target.value)} />
+          <button type="submit">Add todo</button>
+        </form>
       </div>
 
       <div>
@@ -48,7 +33,7 @@ const App = (store) => {
               ) : (
                 <span>{task.text}</span>
               )}
-              <button>del</button>
+              <button onClick={() => dispatch(delTodo(task._id))}>del</button>
             </li>
           ))}
         </ol>
@@ -56,5 +41,3 @@ const App = (store) => {
     </div>
   );
 };
-
-export default App;
