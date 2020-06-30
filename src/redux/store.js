@@ -38,10 +38,10 @@ export const delTodo = createAction("DEL_TODO", (_id) => {
   };
 });
 
-export const toggleTodo = createAction("TOGGLE_TODO", (text) => {
+export const toggleTodo = createAction("TOGGLE_TODO", (_id) => {
   return {
-    type: "DELTOGGLE_TODO_TODO",
-    payload: { _id: nanoid(), text, isDone: false },
+    type: "TOGGLE_TODO",
+    payload: { _id },
   };
 });
 
@@ -53,7 +53,9 @@ const rootReducer = createReducer(state, {
     state.filter((state) => state._id !== action.payload._id);
   },
   [toggleTodo]: (state, action) => {
-    state.map();
+    state.map((task) =>
+      task._id === action.payload._id ? { ...task, isDone: !task.isDone } : task
+    );
   },
 });
 
