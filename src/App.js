@@ -14,7 +14,6 @@ export const App = () => {
   };
 
   const delClick = (_id) => {
-    console.log(_id);
     dispatch(delTodo(_id));
   };
 
