@@ -14,6 +14,7 @@ export const App = () => {
   };
 
   const delClick = (_id) => {
+    console.log(_id);
     dispatch(delTodo(_id));
   };
 
@@ -35,13 +36,17 @@ export const App = () => {
         <ol>
           {tasks.map((task) => (
             <li key={task._id}>
-              <button onClick={isDoneClick(task._id)}>\/</button>
+              <button onClick={(e) => e.stopPropagation(isDoneClick(task._id))}>
+                \/
+              </button>
               {task.isDone ? (
                 <strike>{task.text}</strike>
               ) : (
                 <span>{task.text}</span>
               )}
-              <button onClick={delClick(task._id)}>del</button>
+              <button onClick={(e) => e.stopPropagation(delClick(task._id))}>
+                del
+              </button>
             </li>
           ))}
         </ol>
