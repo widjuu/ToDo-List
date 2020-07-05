@@ -13,11 +13,13 @@ export const App = () => {
     setValue("");
   };
 
-  const delClick = (_id) => {
+  const delClick = (e, _id) => {
+    e.stopPropagation();
     dispatch(delTodo(_id));
   };
 
-  const isDoneClick = (_id) => {
+  const isDoneClick = (e, _id) => {
+    e.stopPropagation();
     dispatch(toggleTodo(_id));
   };
 
@@ -35,17 +37,13 @@ export const App = () => {
         <ol>
           {tasks.map((task) => (
             <li key={task._id}>
-              <button onClick={(e) => e.stopPropagation(isDoneClick(task._id))}>
-                \/
-              </button>
+              <button onClick={(e) => isDoneClick(e, task._id)}>\/</button>
               {task.isDone ? (
                 <strike>{task.text}</strike>
               ) : (
                 <span>{task.text}</span>
               )}
-              <button onClick={(e) => e.stopPropagation(delClick(task._id))}>
-                del
-              </button>
+              <button onClick={(e) => delClick(e, task._id)}>del</button>
             </li>
           ))}
         </ol>
